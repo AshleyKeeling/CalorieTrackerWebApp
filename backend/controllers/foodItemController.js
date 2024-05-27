@@ -40,12 +40,28 @@ const getFoodItem = async (req, res) => {
 const createFoodItem = async (req, res) => {
     const {name, calorieAmount, mealTime} = req.body;
 
+    // error checking
+    const emptyFields = []
+
+    if(!name) {
+        emptyFields.push('name');
+    }
+    if (!calorieAmount) {
+        emptyFields.push('calorieAmount');
+    }
+    if (!mealTime) {
+        emptyFields.push('mealTime');
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in all the fields', emptyFields})
+    }
+
     // add doc to db
     try {
         const foodItem = await FoodItem.create({name, calorieAmount, mealTime});
         res.status(200).json(foodItem);
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({error: error.message, emptyFields});
         console.log(error);
     }
 };
