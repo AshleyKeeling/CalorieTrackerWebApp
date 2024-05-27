@@ -12,7 +12,7 @@ const foodItemSchema = new Schema({
     },
     mealTime : {
         type: String,
-        enum: ['breakfast', 'lunch', 'dinner', 'snack'],
+        enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
         required: true
     }
 }, { timestamps: true});
