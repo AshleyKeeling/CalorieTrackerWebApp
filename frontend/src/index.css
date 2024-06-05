@@ -6,23 +6,13 @@
 body {
   margin: 0;
   padding: 20px; /* change this */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
-.home {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 100px;
-}
+
 
 label, input, select {
   display: block;
@@ -37,12 +27,7 @@ input, select {
   box-sizing: border-box;
 }
 form button {
-  /* background: var(--primary); */
-  /* border: 1; */
-  /* color: black; */
-  /* padding: 10px; */
-  /* font-family: "Poppins"; */
-  /* border-radius: 4px; */
+  
   cursor: pointer;
 }
 div.error {
