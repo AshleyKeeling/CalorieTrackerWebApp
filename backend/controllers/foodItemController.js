@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 // GET all food items
 const getAllFoodItems = async (req, res) => {
     try {
-        const foodItems = await FoodItem.find({}).sort({createdAt: -1});
+        const foodItems = await FoodItem.find({}).sort({ createdAt: -1 });
         //sends food items back as json
         res.status(200).json(foodItems);
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({ error: error.message });
         console.log(error);
     }
 };
@@ -19,7 +19,7 @@ const getFoodItem = async (req, res) => {
 
     // checks if ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({error : 'No such food item (invalid ID)'});
+        return res.status(400).json({ error: 'No such food item (invalid ID)' });
     }
 
     // gets food item
@@ -28,22 +28,22 @@ const getFoodItem = async (req, res) => {
         if (foodItem) {
             res.status(200).json(foodItem);
         } else {
-            res.status(400).json({error: "food item not found"});
+            res.status(400).json({ error: "food item not found" });
         }
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({ error: error.message });
         console.log(error);
     }
 };
 
 // POST a new food item
 const createFoodItem = async (req, res) => {
-    const {name, calorieAmount, mealTime} = req.body;
+    const { name, calorieAmount, mealTime } = req.body;
 
     // error checking
     const emptyFields = []
 
-    if(!name) {
+    if (!name) {
         emptyFields.push('name');
     }
     if (!calorieAmount) {
@@ -53,15 +53,15 @@ const createFoodItem = async (req, res) => {
         emptyFields.push('mealTime');
     }
     if (emptyFields.length > 0) {
-        return res.status(400).json({error: 'Please fill in all the fields', emptyFields})
+        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
 
     // add doc to db
     try {
-        const foodItem = await FoodItem.create({name, calorieAmount, mealTime});
+        const foodItem = await FoodItem.create({ name, calorieAmount, mealTime });
         res.status(200).json(foodItem);
     } catch (error) {
-        res.status(400).json({error: error.message, emptyFields});
+        res.status(400).json({ error: error.message, emptyFields });
         console.log(error);
     }
 };
@@ -72,28 +72,71 @@ const deleteFoodItem = async (req, res) => {
 
     // checks if ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({error : 'No such food item (invalid ID)'});
+        return res.status(400).json({ error: 'No such food item (invalid ID)' });
     }
 
     // deletes food item
     try {
-        const foodItem = await FoodItem.findByIdAndDelete({_id: id});
+        const foodItem = await FoodItem.findByIdAndDelete({ _id: id });
 
-        if(foodItem) {
+        if (foodItem) {
             res.status(200).json(foodItem);
         } else {
-            res.status(400).json({error: 'No such Food Item'});
+            res.status(400).json({ error: 'No such Food Item' });
         }
 
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({ error: error.message });
         console.log(error);
     }
 };
+
+// update food item
+const updateFoodItem = async (req, res) => {
+    const { id } = req.params;
+    const { name, calorieAmount, mealTime } = req.body;
+
+    // checks if ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'No such food item (invalid ID)' });
+    }
+
+    // error checking
+    const emptyFields = []
+
+    if (!name) {
+        emptyFields.push('name');
+    }
+    if (!calorieAmount) {
+        emptyFields.push('calorieAmount');
+    }
+    if (!mealTime) {
+        emptyFields.push('mealTime');
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
+    }
+
+    // updates food item
+    try {
+        const foodItem = await FoodItem.findByIdAndUpdate({ _id: id }, { name, calorieAmount, mealTime });
+
+        if (foodItem) {
+            res.status(200).json(foodItem);
+        } else {
+            res.status(400).json({ error: 'No such Food Item' });
+        }
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+        console.log(error);
+    }
+}
 
 module.exports = {
     getAllFoodItems,
     getFoodItem,
     createFoodItem,
-    deleteFoodItem
+    deleteFoodItem,
+    updateFoodItem
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllFoodItems, getFoodItem, createFoodItem, deleteFoodItem } = require('../controllers/foodItemController');
+const { getAllFoodItems, getFoodItem, createFoodItem, deleteFoodItem, updateFoodItem } = require('../controllers/foodItemController');
 
 const router = express.Router();
 
@@ -14,5 +14,8 @@ router.post('/', createFoodItem);
 
 // DELETE a food item
 router.delete('/:id', deleteFoodItem);
+
+// UPDATE a food item
+router.patch('/:id', updateFoodItem);
 
 module.exports = router;
