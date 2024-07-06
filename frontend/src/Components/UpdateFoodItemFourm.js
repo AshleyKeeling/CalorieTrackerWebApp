@@ -37,9 +37,6 @@ const UpdateFoodItemFourm = ({ foodItem }) => {
             setError(null);
             setEmptyFields([]);
             navigate('/');
-
-            // dispatch({ type: 'CREATE_FOOD_ITEM', payload: json })
-
         } else {
             setError(json.error);
             setEmptyFields(json.emptyFields);
@@ -54,7 +51,6 @@ const UpdateFoodItemFourm = ({ foodItem }) => {
                 </span>
                 <h3 className="mb-2 ml-2">Update Food</h3>
             </div>
-
 
             <form className="AddNewFoodItemFourm" onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -98,7 +94,7 @@ const UpdateFoodItemFourm = ({ foodItem }) => {
                 <button className="btn btn-primary mt-2 mb-3">Update Food</button>
 
                 {error && <div className="error">{error}</div>}
-
+                
             </form>
         </div>
     )

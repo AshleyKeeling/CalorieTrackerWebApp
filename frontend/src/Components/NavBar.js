@@ -8,10 +8,6 @@ const NavBar = () => {
                 <Link to="/" className="text-decoration-none" style={{ color: 'black' }}>
                     <h1 className="display-4 mb-2">Calorie Tracker V1</h1>
                 </Link>
-                {/* <Link to="/updateFoodItem">
-                    <h1>Update Food</h1>
-                </Link> */}
-
             </div>
         </header>
     )

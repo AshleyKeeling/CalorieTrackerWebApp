@@ -19,6 +19,7 @@ const FoodItemDetails = ({ foodItem }) => {
         }
     };
 
+    // redirects user to update food item page, and passes foodItem
     const handleEdit = async () => {
         navigate('/updateFoodItem', { state: { foodItem } });
     };
