@@ -94,7 +94,6 @@ const UpdateFoodItemFourm = ({ foodItem }) => {
                 <button className="btn btn-primary mt-2 mb-3">Update Food</button>
 
                 {error && <div className="error">{error}</div>}
-                
             </form>
         </div>
     )

@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const foodItemSchema = new Schema({
-    name : {
+    name: {
         type: String,
         required: true
     },
-    calorieAmount : {
+    calorieAmount: {
         type: Number,
         required: true
     },
-    mealTime : {
+    mealTime: {
         type: String,
         enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
         required: true
     }
-}, { timestamps: true});
+}, { timestamps: true });
 
 module.exports = mongoose.model('FoodItem', foodItemSchema);
