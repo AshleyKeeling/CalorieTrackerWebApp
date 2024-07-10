@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { FoodItemsContextProvider } from './Context/FoodItemContext';
+import { AuthContextProvider } from './Context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <FoodItemsContextProvider>
-      <App />
-    </FoodItemsContextProvider>
+    <AuthContextProvider>
+      <FoodItemsContextProvider>
+        <App />
+      </FoodItemsContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
 
