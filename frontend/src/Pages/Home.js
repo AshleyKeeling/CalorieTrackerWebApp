@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useFoodItemContext } from "../Hooks/useFoodItemContext";
+import { useAuthContext } from "../Hooks/useAuthContext";
 
 import FoodItemDetails from "../Components/FoodItemDetails";
 import AddNewFoodItemFourm from "../Components/AddNewFoodItemFourm";
@@ -8,11 +9,16 @@ import AddNewFoodItemFourm from "../Components/AddNewFoodItemFourm";
 const Home = () => {
   // add react context in the future
   const { foodItems, dispatch } = useFoodItemContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchFoodItems = async () => {
 
-      const response = await fetch('/api/foodItems');
+      const response = await fetch('/api/foodItems', {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -20,8 +26,10 @@ const Home = () => {
       }
     }
 
-    fetchFoodItems();
-  }, [dispatch]);
+    if (user) {
+      fetchFoodItems();
+    }
+  }, [dispatch, user]);
 
 
   return (

@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { useFoodItemContext } from "../Hooks/useFoodItemContext";
+import { useAuthContext } from "../Hooks/useAuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
 const AddNewFoodItemFourm = () => {
     const { dispatch } = useFoodItemContext();
+    const { user } = useAuthContext();
 
     const [name, setName] = useState('');
     const [calorieAmount, setCalorieAmount] = useState('');
@@ -16,6 +18,11 @@ const AddNewFoodItemFourm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!user) {
+            setError('You must be logged in');
+            return
+        }
+
         // adding new food item to database
         const foodItem = { name, calorieAmount, mealTime };
 
@@ -23,7 +30,8 @@ const AddNewFoodItemFourm = () => {
             method: 'POST',
             body: JSON.stringify(foodItem),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
 

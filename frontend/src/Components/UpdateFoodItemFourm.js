@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuthContext } from "../Hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 
 
@@ -9,6 +10,8 @@ const UpdateFoodItemFourm = ({ foodItem }) => {
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
 
+    const { user } = useAuthContext();
+
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -16,14 +19,21 @@ const UpdateFoodItemFourm = ({ foodItem }) => {
     }
 
     const handleSubmit = async (e) => {
-        const updateFoodItem = { name, calorieAmount, mealTime };
         e.preventDefault();
+
+        if (!user) {
+            setError('You must be logged in');
+            return
+        }
+
+        const updateFoodItem = { name, calorieAmount, mealTime };
 
         const response = await fetch('api/foodItems/' + foodItem._id, {
             method: "PATCH",
             body: JSON.stringify(updateFoodItem),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
 

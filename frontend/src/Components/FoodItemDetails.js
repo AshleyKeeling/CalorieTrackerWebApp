@@ -1,15 +1,23 @@
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useFoodItemContext } from "../Hooks/useFoodItemContext";
+import { useAuthContext } from "../Hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 
 const FoodItemDetails = ({ foodItem }) => {
     const { dispatch } = useFoodItemContext();
+    const { user } = useAuthContext();
     const navigate = useNavigate();
 
     // delete food item
     const handleDelete = async () => {
+        if (!user) {
+            return
+        }
         const response = await fetch("api/foodItems/" + foodItem._id, {
             method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         });
 
         const json = await response.json();
