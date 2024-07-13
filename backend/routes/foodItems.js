@@ -1,7 +1,12 @@
 const express = require('express');
 const { getAllFoodItems, getFoodItem, createFoodItem, deleteFoodItem, updateFoodItem } = require('../controllers/foodItemController');
 
+const requireAuth = require('../middleware/requireAuth');
+
 const router = express.Router();
+
+// this middleware is used before all below routes
+router.use(requireAuth);
 
 // GET all food items
 router.get('/', getAllFoodItems);
