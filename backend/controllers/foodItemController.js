@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 
 // GET all food items
 const getAllFoodItems = async (req, res) => {
+    const user_id = req.user._id;
     try {
-        const foodItems = await FoodItem.find({}).sort({ createdAt: -1 });
+        const foodItems = await FoodItem.find({ user_id }).sort({ createdAt: -1 });
         //sends food items back as json
         res.status(200).json(foodItems);
     } catch (error) {
@@ -58,7 +59,8 @@ const createFoodItem = async (req, res) => {
 
     // add doc to db
     try {
-        const foodItem = await FoodItem.create({ name, calorieAmount, mealTime });
+        const user_id = req.user._id;
+        const foodItem = await FoodItem.create({ name, calorieAmount, mealTime, user_id });
         res.status(200).json(foodItem);
     } catch (error) {
         res.status(400).json({ error: error.message, emptyFields });

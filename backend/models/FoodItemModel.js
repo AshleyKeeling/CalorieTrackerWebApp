@@ -14,6 +14,10 @@ const foodItemSchema = new Schema({
         type: String,
         enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
         required: true
+    },
+    user_id: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
