@@ -1,4 +1,4 @@
-import { act, createContext, useReducer } from 'react';
+import { act, createContext, useReducer, useEffect } from 'react';
 
 export const AuthContext = createContext()
 
@@ -17,6 +17,15 @@ export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null
     })
+
+    // checks if user is already logged in at the start of the application (JWT already in local storage)
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+
+        if (user) {
+            dispatch({ type: 'LOGIN', payload: user })
+        }
+    }, [])
 
     console.log("AuthContext state: ", state);
 
