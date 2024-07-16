@@ -12,25 +12,26 @@ const NavBar = () => {
 
     return (
         <header>
-            <div>
-                {/* this is a like a normal nav bar, each one is a link to a page */}
-                <Link to="/" className="text-decoration-none" style={{ color: 'black' }}>
-                    <h1 className="display-4 mb-2">Calorie Tracker V2</h1>
-                </Link>
-                <nav>
-                    {user && (<div>
-                        <span>{user.email}</span>
-                        <button onClick={handleLogoutClick}>Log Out</button>
+            <nav className="navbar navbar-light bg-light">
+                <div className="container-fluid">
+                    <Link to="/" className="text-decoration-none" style={{ color: 'black' }}>
+                        <h1 className="display-6 mb-2">Calorie Tracker V2</h1>
+                    </Link>
+                    <div className="d-flex ms-auto">
+                        {user ? (
+                            <div className="d-flex align-items-center">
+                                <span className="me-2">{user.email}</span>
+                                <button className="btn btn-outline-secondary" onClick={handleLogoutClick}>Log Out</button>
+                            </div>
+                        ) : (
+                            <div className="d-flex">
+                                <Link to="/login" className="nav-link px-2"><h2 className="h5">Login</h2></Link>
+                                <Link to="/signup" className="nav-link px-2"><h2 className="h5">Signup</h2></Link>
+                            </div>
+                        )}
                     </div>
-                    )}
-                    {!user && (
-                        <div>
-                            <Link to="/login">Login</Link>
-                            <Link to="/signup">Signup</Link>
-                        </div>
-                    )}
-                </nav>
-            </div>
+                </div>
+            </nav>
         </header>
     )
 }

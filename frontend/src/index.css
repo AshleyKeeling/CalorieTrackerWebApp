@@ -3,15 +3,12 @@
   --error: #e7195a;
 }
 
-body {
-  margin: 0;
-  padding: 20px; /* change this */
+.pages {
+  padding: 20px;
   
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
 
 
 label, input, select {
