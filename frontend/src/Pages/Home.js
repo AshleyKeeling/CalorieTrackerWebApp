@@ -4,6 +4,7 @@ import { useAuthContext } from "../Hooks/useAuthContext";
 
 import FoodItemDetails from "../Components/FoodItemDetails";
 import AddNewFoodItemFourm from "../Components/AddNewFoodItemFourm";
+import TodaysFoodSummary from "../Components/TodaysFoodSummary";
 
 
 const Home = () => {
@@ -39,6 +40,13 @@ const Home = () => {
         <AddNewFoodItemFourm key={1} />
       </div>
       <div className="col-md-8 col-sm-12 ">
+        <h3 className="">Todays Summary</h3>
+        {foodItems && foodItems.length > 0 ? (
+          <TodaysFoodSummary />
+        ) : (
+          <p>No food items available.</p>
+        )}
+
         <h3 className="">Food History</h3>
         {foodItems && foodItems.length > 0 ? (
           foodItems.map((foodItem) => (

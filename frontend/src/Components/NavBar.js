@@ -15,7 +15,7 @@ const NavBar = () => {
             <nav className="navbar navbar-light bg-light">
                 <div className="container-fluid">
                     <Link to="/" className="text-decoration-none" style={{ color: 'black' }}>
-                        <h1 className="display-6 mb-2">Calorie Tracker V2</h1>
+                        <h1 className="display-6 mb-2">Calorie Tracker V3</h1>
                     </Link>
                     <div className="d-flex ms-auto">
                         {user ? (
