@@ -15,7 +15,7 @@ export const authReducer = (state, action) => {
 
 const verifyToken = async (token) => {
     try {
-        const response = await fetch('/api/validate-token', {
+        const response = await fetch('/api/user/validate-token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
