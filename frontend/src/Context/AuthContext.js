@@ -1,31 +1,63 @@
-import { act, createContext, useReducer, useEffect } from 'react';
+import { createContext, useReducer, useEffect } from 'react';
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
-            return { user: action.payload }
+            return { user: action.payload };
         case 'LOGOUT':
-            return { user: null }
+            return { user: null };
         default:
-            state
+            return state;
     }
-}
+};
+
+const verifyToken = async (token) => {
+    try {
+        const response = await fetch('/api/validate-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Token verification failed');
+        }
+
+        const data = await response.json();
+        return data.isValid;
+    } catch (error) {
+        console.error('Token verification error:', error);
+        return false;
+    }
+};
 
 export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null
-    })
+    });
 
-    // checks if user is already logged in at the start of the application (JWT already in local storage)
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'))
+        const checkUser = async () => {
+            const user = JSON.parse(localStorage.getItem('user'));
 
-        if (user) {
-            dispatch({ type: 'LOGIN', payload: user })
-        }
-    }, [])
+            if (user && user.token) {
+                const isValid = await verifyToken(user.token);
+
+                if (isValid) {
+                    dispatch({ type: 'LOGIN', payload: user });
+                } else {
+                    localStorage.removeItem('user');
+                    dispatch({ type: 'LOGOUT' });
+                }
+            }
+        };
+
+        checkUser();
+    }, []);
 
     console.log("AuthContext state: ", state);
 
@@ -33,5 +65,5 @@ export const AuthContextProvider = ({ children }) => {
         <AuthContext.Provider value={{ ...state, dispatch }}>
             {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
